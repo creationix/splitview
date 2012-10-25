@@ -8,13 +8,13 @@
 }
 .splitview.horizontal > .slider {
   width: 4px;
-  border-right: 1px solid #555;
+  border-right: 1px solid #aaa;
   top: 0;
   bottom: 0;
 }
 .splitview.vertical > .slider {
   height: 4px;
-  border-bottom: 1px solid #555;
+  border-bottom: 1px solid #aaa;
   left: 0;
   right: 0;
 }
