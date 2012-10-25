@@ -3,7 +3,7 @@ exports.SplitView = SplitView;
 function SplitView(options) {
   this.orientation = options.orientation || "left";
   this.el = options.el || document.createElement("div");
-  
+
   this.size = options.size || 200;
 
   if (this.orientation === "left" || this.orientation === "right") {
@@ -19,7 +19,7 @@ function SplitView(options) {
   else {
     throw new Error("options.orientation must be one of 'left', 'right', 'top', or 'bottom'");
   }
-  
+
   var sliderEl = document.createElement("div");
   this.el.appendChild(sliderEl);
   this.sliderEl = sliderEl;
@@ -40,11 +40,11 @@ function SplitView(options) {
     window.addEventListener("mousemove", onMouseMove, true);
     window.addEventListener('mouseup', onMouseUp, true);
   }, true);
-  
+
   function onMouseMove(evt) {
     evt.preventDefault();
     evt.stopPropagation();
-    var delta; 
+    var delta;
     if (self.horizontal) {
       delta = evt.clientX - position;
       position = evt.clientX;
@@ -67,7 +67,7 @@ function SplitView(options) {
     }
     self.resize();
   }
-  
+
   function onMouseUp(evt) {
     window.removeEventListener("mousemove", onMouseMove, true);
     window.removeEventListener('mouseup', onMouseUp, true);
@@ -81,13 +81,13 @@ SplitView.prototype.resize = function (width, height) {
     width = this.width;
     height = this.height;
   }
-  
+
   this.width = width;
   this.height = height;
-  
+
   this.el.style.width = width + "px";
   this.el.style.height = height + "px";
-  
+
   this.sliderEl.style[this.orientation] = this.size + "px";
   if (this.side) {
     this.side.el.style[this.orientation] = 0;
