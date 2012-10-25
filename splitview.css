@@ -1,0 +1,27 @@
+.splitview {
+  position: absolute;
+}
+.splitview > * {
+  position: absolute;
+}
+.splitview > .slider {
+  background-color: #ddd;
+}
+.splitview.horizontal > .slider {
+  width: 4px;
+  border-right: 1px solid #555;
+  top: 0;
+  bottom: 0;
+}
+.splitview.vertical > .slider {
+  height: 4px;
+  border-bottom: 1px solid #555;
+  left: 0;
+  right: 0;
+}
+.splitview.horizontal > .slider:hover {
+  cursor: ew-resize;
+}
+.splitview.vertical > .slider:hover {
+  cursor: ns-resize;
+}
