@@ -1,8 +1,6 @@
-.splitview {
+.splitview, .splitview > * {
   position: absolute;
-}
-.splitview > * {
-  position: absolute;
+  overflow: hidden;
 }
 .splitview > .slider {
   background-color: #ddd;
