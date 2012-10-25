@@ -88,6 +88,15 @@ SplitView.prototype.resize = function (width, height) {
   this.el.style.width = width + "px";
   this.el.style.height = height + "px";
 
+  if (this.horizontal) {
+    if (this.size > this.width - 5) this.size = this.width - 5;
+  }
+  else {
+    if (this.size > this.height - 5) this.size = this.height - 5;
+  }
+  if (this.size < 0) this.size = 0;
+
+
   this.sliderEl.style[this.orientation] = this.size + "px";
   if (this.side) {
     this.side.el.style[this.orientation] = 0;

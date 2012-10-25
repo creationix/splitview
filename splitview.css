@@ -6,6 +6,7 @@
 }
 .splitview > .slider {
   background-color: #ddd;
+  z-index: 10;
 }
 .splitview.horizontal > .slider {
   width: 4px;
