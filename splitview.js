@@ -27,23 +27,41 @@ function SplitView(options) {
   sliderEl.classList.add("slider");
   var position = null;
   var self = this;
-  sliderEl.addEventListener("mousedown", function (evt) {
+  var isTouch;
+
+  function onStart(evt) {
     if (position !== null) return;
     evt.preventDefault();
     evt.stopPropagation();
+    if (evt.touches) {
+      evt = evt.touches[0];
+      isTouch = true;
+    }
+    else {
+      isTouch = false;
+    }
     if (self.horizontal) {
       position = evt.clientX;
     }
     else {
       position = evt.clientY;
     }
-    window.addEventListener("mousemove", onMouseMove, true);
-    window.addEventListener('mouseup', onMouseUp, true);
-  }, true);
+    if (isTouch) {
+      window.addEventListener("touchmove", onMove, true);
+      window.addEventListener('touchend', onEnd, true);
+    }
+    else {
+      window.addEventListener("mousemove", onMove, true);
+      window.addEventListener('mouseup', onEnd, true);
+    }
+  }
 
-  function onMouseMove(evt) {
+  function onMove(evt) {
     evt.preventDefault();
     evt.stopPropagation();
+    if (evt.touches) {
+      evt = evt.touches[0];
+    }
     var delta;
     if (self.horizontal) {
       delta = evt.clientX - position;
@@ -68,11 +86,23 @@ function SplitView(options) {
     self.resize();
   }
 
-  function onMouseUp(evt) {
-    window.removeEventListener("mousemove", onMouseMove, true);
-    window.removeEventListener('mouseup', onMouseUp, true);
+  function onEnd(evt) {
+    if (isTouch) {
+      window.removeEventListener("touchmove", onMove, true);
+      window.removeEventListener('touchend', onEnd, true);
+    }
+    else {
+      window.removeEventListener("mousemove", onMove, true);
+      window.removeEventListener('mouseup', onEnd, true);
+    }
     position = null;
+    isTouch = null;
   }
+
+
+
+  sliderEl.addEventListener("mousedown", onStart, true);
+  sliderEl.addEventListener("touchstart", onStart, true);
 }
 
 function isNumber(value) {
