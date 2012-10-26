@@ -75,15 +75,26 @@ function SplitView(options) {
   }
 }
 
+function isNumber(value) {
+  return typeof value === "number" && !isNaN(value);
+}
+
 SplitView.prototype.resize = function (width, height) {
-  if (!arguments.length) {
-    if (this.width === null) return;
+
+  if (arguments.length === 0) {
+    if (!isNumber(this.width) || !isNumber(this.height)) {
+      return;
+    }
     width = this.width;
     height = this.height;
   }
-
-  this.width = width;
-  this.height = height;
+  else {
+    if (!isNumber(width) || !isNumber(height)) {
+      throw new TypeError("width and height must be numbers");
+    }
+    this.width = width;
+    this.height = height;
+  }
 
   this.el.style.width = width + "px";
   this.el.style.height = height + "px";
