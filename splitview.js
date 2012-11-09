@@ -5,6 +5,8 @@ function SplitView(options) {
   this.el = options.el || document.createElement("div");
 
   this.size = options.size || 200;
+  this.defaultSize = this.size;
+  this.savedSize = 0;
 
   if (this.orientation === "left" || this.orientation === "right") {
     this.el.classList.add("splitview");
@@ -83,6 +85,10 @@ function SplitView(options) {
         self.size -= delta;
       }
     }
+    if (self.savedSize) {
+      self.savedSize = undefined;
+    }
+
     self.resize();
   }
 
@@ -137,7 +143,6 @@ SplitView.prototype.resize = function (width, height) {
   }
   if (this.size < 0) this.size = 0;
 
-
   this.sliderEl.style[this.orientation] = this.size + "px";
   if (this.side) {
     this.side.el.style[this.orientation] = 0;
@@ -158,6 +163,32 @@ SplitView.prototype.resize = function (width, height) {
     }
   }
 
+};
+
+SplitView.prototype.toggleSide = function () {
+  if (this.size) {
+    this.hideSide();
+  }
+  else {
+    this.showSide();
+  }
+};
+
+SplitView.prototype.hideSide = function () {
+  this.savedSize = this.size;
+  this.size = 0;
+  this.resize();
+};
+
+SplitView.prototype.showSide = function () {
+  if (this.savedSize) {
+    this.size = this.savedSize;
+    this.savedSize = 0;
+  }
+  else {
+    this.size = this.defaultSize;
+  }
+  this.resize();
 };
 
 SplitView.prototype.addSide = function (obj) {
